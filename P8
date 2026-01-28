@@ -1,63 +1,112 @@
-🔹 Problem 1: Logistic Regression (Classification)
+1. Simple Linear Regression using TensorFlow
 
 
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Sample dataset
-X = [[25, 50000], [40, 60000], [30, 40000], [35, 52000]]
-y = [1, 1, 0, 1]
 
-# Split data
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=1
+np.random.seed(42)
+
+# House sizes (sq ft)
+X = np.random.rand(100, 1) * 3000  # 0–3000 sq ft
+
+# House prices (price = size * rate + noise)
+y = 50000 + X * 150 + np.random.randn(100, 1) * 20000
+
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(1, input_shape=(1,))
+])
+
+
+model.compile(
+    optimizer=tf.keras.optimizers.SGD(learning_rate=0.00000001),
+    loss='mean_squared_error'
 )
 
-# Train model
-model = LogisticRegression()
-model.fit(X_train, y_train)
 
-# Prediction
-y_pred = model.predict(X_test)
-
-# Evaluation
-print("Accuracy:", accuracy_score(y_test, y_pred))
-print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+model.fit(X, y, epochs=50, verbose=1)
 
 
-🔹 Problem 2: Linear Regression (Prediction)
+y_pred = model.predict(X)
 
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-
-# Sample dataset
-X = [[1000], [1500], [2000], [2500]]
-y = [50, 75, 100, 125]
-
-# Train model
-model = LinearRegression()
-model.fit(X, y)
-
-# Prediction
-pred = model.predict([[1800]])
-
-# Evaluation
-print("Predicted Price:", pred)
-print("MSE:", mean_squared_error(y, model.predict(X)))
+plt.scatter(X, y, label='Actual Prices')
+plt.scatter(X, y_pred, color='red', label='Predicted Prices')
+plt.xlabel("House Size (sq ft)")
+plt.ylabel("House Price")
+plt.legend()
+plt.show()
 
 
 
-🎤 Viva One-Liners
 
-Logistic Regression? → Classification
+2. Handwritten Digit Classification (MNIST)
 
-Linear Regression? → Prediction
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
-Train-test split? → Model evaluation
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
-Accuracy? → Correct predictions
+# Normalize
+x_train = x_train / 255.0
+x_test = x_test / 255.0
 
-🔥 FINAL EXAM CHEAT LINE (SAVE THIS)
+# Flatten images
+x_train = x_train.reshape(-1, 28*28)
+x_test = x_test.reshape(-1, 28*28)
 
-Sklearn = Split → Fit → Predict
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+model.fit(x_train, y_train, epochs=5, batch_size=32)
+
+test_loss, test_accuracy = model.evaluate(x_test, y_test)
+print("Test Accuracy:", test_accuracy)
+
+y_pred = model.predict(x_test)
+y_pred_classes = np.argmax(y_pred, axis=1)
+
+cm = confusion_matrix(y_test, y_pred_classes)
+
+plt.figure(figsize=(8,6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix")
+plt.show()
+
+
+📌 Interpretation
+
+Diagonal values → Correct predictions
+
+Non-diagonal → Misclassifications
+
+Exam Memory Tips 🧠
+Linear Regression
+
+Data → Model → Compile → Fit → Predict → Plot
+
+Neural Network
+
+Load → Normalize → Flatten → Dense → Softmax → Train → Evaluate → Confusion Matrix
+
+
+
+
+
+
