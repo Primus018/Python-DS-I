@@ -1,0 +1,63 @@
+✅ P3: Iris Dataset using Pandas
+
+Sure-Shot Theory:
+
+Pandas is used for data manipulation, cleaning, and analysis.
+The Iris dataset is loaded into a DataFrame to study its structure, missing values, and statistical properties.
+GroupBy operations help analyze features species-wise.
+Correlation analysis is used to identify relationships between numerical attributes.
+
+
+
+
+import pandas as pd
+import numpy as np
+
+# Load dataset
+df = pd.read_csv("iris.csv")
+
+# Display shape, type, head & tail
+print("Shape:", df.shape)
+print("Type:\n", df.dtypes)
+print("First 4 rows:\n", df.head(4))
+print("Last 4 rows:\n", df.tail(4))
+
+# Replace abnormal symbols with NaN
+df.replace(['??', '##'], np.nan, inplace=True)
+
+# Count missing values
+print("Missing Values:\n", df.isnull().sum())
+
+# Basic statistics
+print("Statistical Summary:\n", df.describe())
+
+# Species-wise statistics
+print("Species-wise Mean:\n", df.groupby('Species').mean())
+
+# Replace missing values
+df['PetalWidthCm'].fillna(df['PetalWidthCm'].mean(), inplace=True)
+df['SepalLengthCm'].fillna(df['SepalLengthCm'].mode()[0], inplace=True)
+
+# Max & Min values
+print("Max Sepal Length:\n", df.loc[df['SepalLengthCm'].idxmax()])
+print("Min Petal Width:\n", df.loc[df['PetalWidthCm'].idxmin()])
+
+# Sort by Sepal Length
+print("Sorted Data:\n", df.sort_values('SepalLengthCm'))
+
+# Correlation
+print("Correlation Matrix:\n", df.corr())
+
+
+
+🎤 Viva One-Liners
+
+Why Pandas? → Data analysis & manipulation
+
+Why NaN? → Standard missing value
+
+Why GroupBy? → Species-wise analysis
+
+Why Correlation? → Relationship between features
+
+
