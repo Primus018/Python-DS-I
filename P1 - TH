@@ -1,0 +1,8 @@
+✅ P1: Account – Deposit & Withdraw (OOP)
+
+Sure-Shot Theory:
+
+Object-Oriented Programming (OOP) is a programming paradigm that organizes code using classes and objects.
+An Account class represents a real-world bank account with attributes like account number, account holder name, and balance.
+Methods such as deposit() and withdraw() are used to modify the balance with proper validation.
+OOP improves code reusability, security, and maintainability.
