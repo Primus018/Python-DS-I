@@ -1,0 +1,52 @@
+🔹 Problem 1: Mean, Variance & Standard Deviation
+
+
+import numpy as np
+from scipy import stats
+
+# Generate random data
+data = np.random.randn(10)
+
+# Statistical measures
+mean = stats.tmean(data)
+variance = stats.tvar(data)
+std_dev = stats.tstd(data)
+
+print("Mean:", mean)
+print("Variance:", variance)
+print("Standard Deviation:", std_dev)
+
+
+
+🔹 Problem 2: Least Squares Method (Best-Fit Line)
+
+
+import numpy as np
+from scipy.linalg import lstsq
+
+# Generate data
+x = np.arange(10)
+y = 2*x + 1 + np.random.randn(10)
+
+# Least squares calculation
+A = np.vstack([x, np.ones(len(x))]).T
+m, c = lstsq(A, y)[0]
+
+
+🧠 MEMORY FLOW (VERY IMPORTANT)
+
+Generate Data → SciPy Function → Print Result
+
+If you remember this flow, you can rebuild the code anytime.
+
+print("Equation of line: y =", m, "x +", c)
+
+🎤 Viva One-Liners
+
+Why SciPy? → Scientific computations
+
+Least squares? → Minimizes error
+
+Mean? → Average value
+
+Std deviation? → Spread of data
