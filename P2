@@ -1,0 +1,49 @@
+✅ P2: NumPy Operations
+(a) Remove Non-Numeric Values
+
+Sure-Shot Theory:
+
+NumPy is a numerical computing library that supports fast array operations.
+Non-numeric values can be removed using boolean indexing and vectorized operations without using loops.
+This improves performance and efficiency in data processing.
+
+(b) Checkerboard Matrix
+
+Sure-Shot Theory:
+
+NumPy slicing allows efficient creation of patterned matrices.
+A checkerboard pattern is created by assigning values to alternate rows and columns using slicing techniques.
+
+🔹 Aim 1: Remove Non-Numeric Values from Array
+
+import numpy as np
+
+arr = np.array(['10', '20', 'abc', '30', 'xyz'])
+
+numeric = arr[np.char.isnumeric(arr)]
+numeric = numeric.astype(int)
+
+print(numeric)
+
+🔹 Aim 2: 8×8 Checkerboard Pattern
+
+import numpy as np
+
+board = np.zeros((8, 8), dtype=int)
+
+board[1::2, ::2] = 1
+board[::2, 1::2] = 1
+
+print(board
+
+import numpy as np
+
+a = np.array(['10','20','x'])
+print(a[np.char.isnumeric(a)].astype(int))
+
+b = np.zeros((8,8),int)
+b[1::2,::2]=1
+b[::2,1::2]=1
+print(b)
+
+
