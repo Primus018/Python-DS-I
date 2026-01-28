@@ -1,0 +1,66 @@
+✅ P4: Transaction Dataset Analysis
+
+Sure-Shot Theory:
+
+Pandas provides powerful tools for filtering, grouping, and aggregating data.
+New columns can be derived from existing data using vectorized operations.
+GroupBy and pivot tables help summarize sales performance and analyze customer behavior efficiently.
+
+
+
+
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("Transaction.csv")
+
+# 1. Filtering data
+filtered = df[(df['payment_method'] == 'Credit Card') &
+              (df['region'].isin(['North', 'South']))]
+
+print("Filtered Data:\n", filtered)
+
+# 2. New columns
+df['total_sales'] = df['quantity_sold'] * df['price_per_unit']
+df['discounted_sales'] = df['total_sales'] * 0.9
+
+print("Discounted Sales > 400:\n", df[df['discounted_sales'] > 400])
+
+# 3. Grouping & aggregation
+grouped = df.groupby('product_name').agg({
+    'quantity_sold': 'sum',
+    'total_sales': 'sum'
+})
+
+print("Grouped Data:\n", grouped)
+
+# 4. Handling missing & duplicate data
+df.drop_duplicates(subset='transaction_id', inplace=True)
+df['payment_method'].fillna('Unknown', inplace=True)
+df = df[df['quantity_sold'] > 0]
+
+# 5. Pivot table
+df['month'] = pd.to_datetime(df['transaction_date']).dt.month
+
+pivot = pd.pivot_table(df,
+                       values='quantity_sold',
+                       index='product_name',
+                       columns='month',
+                       aggfunc='sum',
+                       fill_value=0)
+
+pivot['Total'] = pivot.sum(axis=1)
+
+
+
+
+🎤 Viva One-Liners
+
+Why filtering? → To select required data
+
+Why groupby? → To summarize data
+
+Why pivot table? → To reshape data
+
+Why fillna? → To handle missing values
+print("Pivot Table:\n", pivot)
